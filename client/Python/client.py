@@ -3,7 +3,7 @@ import json
 
 import requests
 
-from client.Python.languages import c_lang_config, cpp_lang_config, java_lang_config, c_lang_spj_config, \
+from client.Python.languages import pas_lang_config, c_lang_config, cpp_lang_config, java_lang_config, c_lang_spj_config, \
     c_lang_spj_compile, py2_lang_config, py3_lang_config, csharp_lang_config, js_lang_config, go_lang_config
 
 
@@ -56,6 +56,13 @@ class JudgeServerClient(object):
 if __name__ == "__main__":
     token = "YOUR_TOKEN_HERE"
 
+    pas_src = r"""
+    program Hello;
+    begin
+        writeln ('Hello, world.');
+    end.
+    """
+    
     c_src = r"""
     #include <stdio.h>
     int main(){
@@ -149,6 +156,11 @@ func main() {
     print("compile_spj")
     print(client.compile_spj(src=c_spj_src, spj_version="2", spj_compile_config=c_lang_spj_compile
                              ), "\n\n")
+
+    print("pas_judge")
+    print(client.judge(src=pas_src, language_config=pas_lang_config,
+                       max_cpu_time=1000, max_memory=1024 * 1024 * 128,
+                       test_case_id="normal", output=True), "\n\n")
 
     print("c_judge")
     print(client.judge(src=c_src, language_config=c_lang_config,
